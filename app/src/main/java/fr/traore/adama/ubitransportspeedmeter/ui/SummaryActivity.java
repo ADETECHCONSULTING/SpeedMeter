@@ -16,16 +16,21 @@ import fr.traore.adama.ubitransportspeedmeter.helper.MathHelper;
 
 public class SummaryActivity extends AppCompatActivity {
 
+    //region Properties
     private static final String EXTRA_LIST_SPEED = "speedlist";
     private List<Integer> mListSpeed = null;
     @BindView(R.id.txvAverageSpeed) TextView txvAverageSpeed;
+    //endregion
 
+    //region Launch
     public static void launch(Context context, ArrayList<Integer> listSpeed){
         Intent intent = new Intent(context, SummaryActivity.class);
         intent.putIntegerArrayListExtra(EXTRA_LIST_SPEED, listSpeed);
         context.startActivity(intent);
     }
+    //endregion
 
+    //region Lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +41,15 @@ public class SummaryActivity extends AppCompatActivity {
         if(getIntent().hasExtra(EXTRA_LIST_SPEED)){
             mListSpeed = getIntent().getIntegerArrayListExtra(EXTRA_LIST_SPEED);
         }
-
-        txvAverageSpeed.setText(String.valueOf(MathHelper.calculateAverageFromIntegerList(mListSpeed)));
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        txvAverageSpeed.setText(String.format("%.2f", MathHelper.calculateAverageFromIntegerList(mListSpeed)));
+    }
+
+    //endregion
 
 }

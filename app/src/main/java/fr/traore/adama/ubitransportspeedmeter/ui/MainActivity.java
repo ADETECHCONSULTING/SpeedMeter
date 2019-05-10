@@ -21,16 +21,24 @@ import fr.traore.adama.ubitransportspeedmeter.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    //region Properties
     private LocationListener mLocationListener;
     @BindView(R.id.txvCurrentSpeed) TextView txvCurrentSpeed;
+    //endregion
 
 
+    //region Lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         //Dexter will simplify the process of requesting permissions
         Dexter.withActivity(this)
@@ -54,5 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 .check();
 
     }
+
+    //endregion
 
 }
