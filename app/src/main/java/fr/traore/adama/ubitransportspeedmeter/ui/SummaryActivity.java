@@ -25,6 +25,7 @@ public class SummaryActivity extends AppCompatActivity {
     //region Launch
     public static void launch(Context context, ArrayList<Integer> listSpeed){
         Intent intent = new Intent(context, SummaryActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putIntegerArrayListExtra(EXTRA_LIST_SPEED, listSpeed);
         context.startActivity(intent);
     }

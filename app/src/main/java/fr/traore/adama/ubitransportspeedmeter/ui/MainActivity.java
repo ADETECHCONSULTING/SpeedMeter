@@ -1,7 +1,12 @@
 package fr.traore.adama.ubitransportspeedmeter.ui;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.LocationListener;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -16,14 +21,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import fr.traore.adama.ubitransportspeedmeter.helper.LocationHelper;
 import fr.traore.adama.ubitransportspeedmeter.R;
+import fr.traore.adama.ubitransportspeedmeter.service.LocationService;
 
 public class MainActivity extends AppCompatActivity {
 
     //region Properties
     private LocationListener mLocationListener;
     @BindView(R.id.txvCurrentSpeed) TextView txvCurrentSpeed;
+    private BroadcastReceiver mReceiver;
     //endregion
 
 
@@ -34,11 +40,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String speedConverted = intent.getStringExtra(LocationService.COPA_MESSAGE);
+                txvCurrentSpeed.setText(speedConverted);
+            }
+        };
 
         //Dexter will simplify the process of requesting permissions
         Dexter.withActivity(this)
@@ -49,7 +58,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPermissionsChecked(MultiplePermissionsReport report) {
                 if(report.areAllPermissionsGranted()){
-                    mLocationListener = LocationHelper.getInstance(MainActivity.this, txvCurrentSpeed);
+
+                    Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
+                    startService(serviceIntent);
+
                 }
             }
 
@@ -61,6 +73,21 @@ public class MainActivity extends AppCompatActivity {
                 .onSameThread()
                 .check();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver((mReceiver),
+                new IntentFilter(LocationService.COPA_RESULT)
+        );
+    }
+
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        super.onStop();
     }
 
     //endregion
