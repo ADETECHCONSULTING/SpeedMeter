@@ -9,6 +9,7 @@ import android.location.LocationListener;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationListener mLocationListener;
     @BindView(R.id.txvCurrentSpeed) TextView txvCurrentSpeed;
     @BindView(R.id.animationView) LottieAnimationView animationView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
     private BroadcastReceiver mReceiver;
     //endregion
 
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.title));
 
         mReceiver = new BroadcastReceiver() {
             @Override

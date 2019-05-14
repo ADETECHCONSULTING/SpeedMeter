@@ -2,4 +2,6 @@
     <string name="app_name">UbiTransportSpeedMeter</string>
     <string name="km_h">Km/h</string>
     <string name="speed_avg_label">Vitesse moyenne entre les deux derniers arrêts</string>
+    <string name="title">Speedometer</string>
+    <string name="resume">Résumé</string>
 </resources>

@@ -7,6 +7,15 @@
     tools:context=".ui.SummaryActivity">
 
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="@string/resume"
+        app:titleTextColor="@color/colorWhite"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/txvAverageSpeed"
         android:layout_width="wrap_content"
