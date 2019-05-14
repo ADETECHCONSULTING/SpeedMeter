@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     //region Properties
     private LocationListener mLocationListener;
     @BindView(R.id.txvCurrentSpeed) TextView txvCurrentSpeed;
+    @BindView(R.id.animationView) LottieAnimationView animationView;
     private BroadcastReceiver mReceiver;
     //endregion
 
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent serviceIntent = new Intent(MainActivity.this, LocationService.class);
                     startService(serviceIntent);
 
+                    //Demarrage de l'animation
+                    animationView.setAnimation("bus_loading.json");
+
                 }
             }
 
@@ -82,11 +87,15 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver((mReceiver),
                 new IntentFilter(LocationService.COPA_RESULT)
         );
+
+        animationView.playAnimation();
+
     }
 
     @Override
     protected void onStop() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mReceiver);
+        animationView.pauseAnimation();
         super.onStop();
     }
 

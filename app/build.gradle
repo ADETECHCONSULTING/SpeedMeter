@@ -35,6 +35,9 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
+    //Lottie files
+    implementation 'com.airbnb.android:lottie:2.7.0'
+
     //Dexter is using android support lib v27 so to avoid conflict I force the exclusion and it'll use the v28 I explicitly declared
     implementation('com.karumi:dexter:5.0.0') {
         exclude group: 'com.android.support'
