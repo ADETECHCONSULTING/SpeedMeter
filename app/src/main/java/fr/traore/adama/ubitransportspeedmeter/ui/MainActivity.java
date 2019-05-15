@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.title));
+        getSupportActionBar().setTitle(getString(R.string.app_name));
 
         mReceiver = new BroadcastReceiver() {
             @Override

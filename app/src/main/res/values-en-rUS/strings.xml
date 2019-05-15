@@ -3,4 +3,5 @@
     <string name="app_name">UbiTransportSpeedMeter</string>
     <string name="km_h">mph</string>
     <string name="speed_avg_label">Average speed between the two last stops</string>
+    <string name="resume">Summary</string>
 </resources>
